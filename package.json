@@ -2,7 +2,7 @@
   "name": "app-autorizzazione-lotti",
   "version": "0.0.0",
   "engines": {
-    "node": "24.13.0"
+    "node": "22.22.3"
   },
   "scripts": {
     "ng": "ng",
