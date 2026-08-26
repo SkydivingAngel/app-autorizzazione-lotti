@@ -1,0 +1,98 @@
+body {
+    overflow-y: auto; /* Hide vertical scrollbar */
+    overflow-x: auto; /* Hide horizontal scrollbar */
+
+    background-image    : linear-gradient(to bottom, #0b3980, #0e469a, #1154b4, #1262cf, #1270eb) !important;
+
+    /*background-image: linear-gradient(to bottom, #09234b, #0c274d, #102c4f, #143051, #193453);*/
+    /*    background-image: linear-gradient(to bottom, #0c2449, #0c3269, #11408a, #1d4dac, #2f5bcf);*/
+    /*background-image: radial-gradient(circle, #0b3980, #0e469a, #1154b4, #1262cf, #1270eb);*/
+
+    /*background-image: linear-gradient(to bottom, #0b3980, #0e469a, #1154b4, #1262cf, #1270eb);
+    background-color: #0b3980 !important;
+    */
+}
+
+body, html {
+    padding-top: 2px !important;
+    margin: 0;
+    min-height: 100%;
+    height: 100%;
+}
+
+.open-sans-login-200 {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.open-sans-login-200b {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.open-sans-login-300 {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.open-sans-login-400 {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.open-sans-login-500 {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.open-sans-login-600 {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.open-sans-login-700 {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.open-sans-login-800 {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.dx-loadindicator-content-circle .dx-loadindicator-segment{
+   width: 10% !important;
+   background: white !important; 
+}
+
+.cursor-hand {
+    cursor: pointer;
+}
+
+.enter-animation {
+  animation: slide-fade 1;
+}

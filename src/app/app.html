@@ -1,0 +1,18 @@
+@if (authService.isLoggedIn()) {
+  <nav class="navbar navbar-expand-md fixed-top navbar-light" style="background-color:#0b3980;">
+      <div class="container-fluid">
+          <a routerLink=""><img src="./logo.png" alt="Logo" height="30" width="30" class="d-inline-block align-text-start mt-0 ml-4"></a>&nbsp;&nbsp;<span class="navbar-brand align-text-start open-sans-login-600 mt-0" style="color: #ffffff; font-size: 24px; font-weight: normal; text-shadow: 1px 1px #000000;">Autorizzazione Lotti</span>
+          <button class="navbar-toggler custom-toggler ms-auto border border border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon" style="color: #ffffff;"></span>
+          </button>
+
+          <div class="collapse navbar-collapse justify-content-start" id="navbarText">
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item mt-2"><a class="nav-link open-sans-login-600" (click)="logout()" style="font-size: 14px;color: #ffffff; text-shadow: 1px 1px #000000; cursor: pointer;">&nbsp;<i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>&nbsp;Logout</a></li>
+              </ul>
+          </div>
+
+      </div>
+  </nav>
+}
+<router-outlet></router-outlet>

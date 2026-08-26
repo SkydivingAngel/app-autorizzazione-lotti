@@ -1,0 +1,1 @@
+export const devextremeLicense = "LCPv1SJ!z7HRX9_a1>Ly<2bVp:_ej%bS3,ir[ZNa;eQ!iZednGnQ1,Jy>7et!cH+Bc+Xo,y-oINdE,J-HpJV+(%@gSNSt:o!p(_y>>b+Sp+a-(e!RG1f1,7!:,NSX9R,@:o+JebRnpbtzGnSt(j@e>1FkVy+1%HaYVQa_(>ayce-X,7mt,1mo>RQmk7!:2_@)2%dQI%!F2%8<pK!GIi<<I%tvIp-66_9<aj@F>%X<2p@6p<-)!jyQaNRQpg!F6<4$27y@G<-6p<dQI%!:aQ!)27@QI%4v>jzvaj@F2p-F>jy:6<dQ>K-:>Q4:G_@@9Qdv6<!F6<dFI7yFI7yFI7Ll";

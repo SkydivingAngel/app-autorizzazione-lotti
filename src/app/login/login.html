@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="row vh-80 align-items-center mt-5">
+    <div class="col-xl-6 mx-auto ml-10 mr-10">
+        <div class="card border-0 text-center ml-10 mr-10">
+            <div class="card-header bg-opacity-0" style="color: #ffffff; background-image: linear-gradient(to right, #0b3980, #0e469a, #1154b4, #1262cf, #1270eb);">
+                <img src="./logo.png" alt="Logo" height="100" class="d-inline-block align-text-start mt-0"><br />&nbsp;&nbsp;&nbsp;<b><span class="open-sans-login-600" style="color: #ffffff; font-size: 24px; font-weight: normal; text-shadow: 1px 1px #000000">Autorizzazione Lotti - Login</span></b>
+            </div>
+            <div class="card-body text-center">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-floating" id="loginForm" method="post" asp-antiforgery="true">
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" style="font-size: 20px; height: 58px; width: 58px;">abc</span>
+                        <div class="form-floating mb-3">
+                            <input formControlName="username" class="form-control open-sans-login-200b text-light" style="font-size: 16px;height: 44px; background-image: linear-gradient(to left, #b0caf4, #aec9f4, #acc8f3, #a9c8f3, #a7c7f2); border-radius: 0;" aria-required="true" autocomplete="on" placeholder="Nome" maxlength="12" />
+                            <label for="username" class="form-label text-dark open-sans-login-200b">Username</label>
+                            @if (loginForm.get('username')?.invalid && (loginForm.get('username')?.touched || loginForm.get('username')?.dirty)) {
+                            <div class="text-danger fw-normalopen-sans-login-200">
+                            Lo Username e' obbligatorio!
+                            </div>
+                            }
+                          </div>
+                    </div>
+
+                    <div class="input-group mb-1">
+                        <span class="input-group-text" style="font-size: 18px; height: 58px; width: 58px;">&nbsp;***</span>
+                        <div class="form-floating mb-3">
+                            <input formControlName="password" id="password" [type]="checkBox_show_password ? 'text' : 'password'" class="form-control open-sans-login-200b text-light" style="font-size: 16px; height: 44px; background-image: linear-gradient(to left, #b0caf4, #aec9f4, #acc8f3, #a9c8f3, #a7c7f2); border-radius: 0;" aria-required="true" autocomplete="off" maxlength="20" placeholder="Password" />
+                            <label for="password" class="form-label text-dark open-sans-login-200b">Password</label>
+                            @if (loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)) {
+                            <div class="text-danger fw-normal open-sans-login-200">
+                            La Password e' obbligatoria!
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-check form-check-inline ms-14">
+                        <dx-check-box
+                            [(value)]="checkBox_show_password"
+                            (onValueChanged)="handleValueChange($event)"
+                            alt="Mostra/Nascondi Password">
+                        </dx-check-box>&nbsp;
+                        <label for="showPassword" class="form-check-label open-sans-login-200b fa-solid fa-ey" style="font-weight: normal;"><i class="fa-solid fa-eye" id="showIcon"></i></label>
+                    </div>
+                    <!-- <div class="form-check form-check-inline">
+                        <input type="checkbox" asp-for="RememberMe" class="form-check-input" id="defaultCheckBox" style="cursor: pointer; box-shadow:none !important" checked>
+                        <label for="defaultCheckBox" class="form-check-label open-sans-login-200b" style="font-size: 15px; font-weight: normal; cursor: pointer;">Non ti scordar di me</label>
+                    </div> -->
+                    <div class="form-group mt-2 mb-2">
+                        <button type="submit" class="btn btn-primary open-sans-login-200b" value="Login" style="width: 100px; background-image: linear-gradient(to left, #0b3980, #0e469a, #1154b4, #1262cf, #1270eb); text-shadow: 1px 1px #000000" [disabled]="loginForm.invalid || isLoadIndicatorVisible" [class.opacity-50]="loginForm.invalid || isLoadIndicatorVisible"><i class="fa-solid fa-key fa-fw"></i>&nbsp;Login</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center bg-opacity-0" style="color: yellow; height: 44px; background-image: linear-gradient(to left, #0b3980, #0e469a, #1154b4, #1262cf, #1270eb);">
+                {{  login_message() }}
+            </div>
+        </div>
+    </div>
+</div>
+@if (isLoadIndicatorVisible) {
+    <div class="row align-items-center">
+        <div class="col-xl-10 mx-auto text-center ml-10 mr-10 mb-2">
+            <dx-load-indicator
+                class="my-custom-loader"
+                [(visible)]="isLoadIndicatorVisible"
+                [height]="80"
+                [width]="80"
+                [animationType]="'circle'">
+            </dx-load-indicator>
+        </div>
+    </div>
+}

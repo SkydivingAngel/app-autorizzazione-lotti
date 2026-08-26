@@ -1,0 +1,123 @@
+<div class="container" id="container" animate.enter="enter-animation">
+    <div class="row align-items-center mt-5">
+        <div class="col-xl-10 mx-auto ml-10 mr-10 mt-5">
+            <div class="card border-0 text-center ml-10 mr-10">
+                <div class="card-header bg-opacity-0" style="color: #ffffff; background-image: linear-gradient(to right, #0b3980, #0e469a, #1154b4, #1262cf, #1270eb);">
+                    <b><span class="open-sans-login-600" style="color: #ffffff; font-size: 22px; font-weight: normal; text-shadow: 1px 1px #000000">Elenco Lotti da Autorizzare</span></b>
+                </div>
+                <div class="card-body text-center">
+                    <dx-select-box
+                        #selectBoxRef
+                        [dataSource]="lottoArray()"
+                        valueExpr="codiceLotto"
+                        displayExpr="codiceLotto"
+                        [searchEnabled]="true"
+                        (onValueChanged)="onValueChanged($event)">
+                    </dx-select-box>
+                </div>
+                <div class="card-footer text-center bg-opacity-0 open-sans-login-200b" style="color: yellow; height: 44px; font-size:18px; background-image: linear-gradient(to left, #0b3980, #0e469a, #1154b4, #1262cf, #1270eb);">
+                {{ autorizzazione_lotti_message() }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center mt-4">
+        <div class="col-xl-10 mx-auto text-center ml-10 mr-10">
+            <dx-load-indicator
+                class="my-custom-loader"
+                [(visible)]="isLoadIndicatorVisibleLotti"
+                [height]="80"
+                [width]="80"
+                [animationType]="'circle'">
+            </dx-load-indicator>
+        </div>
+    </div>
+
+    <div class="row align-items-center mt-4">
+        <div class="col-xl-10 mx-auto ml-10 mr-10 mt-1">
+            <div class="card border-0 text-center ml-10 mr-10">
+                <div class="card-header bg-opacity-0" style="color: #ffffff; background-image: linear-gradient(to right, #0b3980, #0e469a, #1154b4, #1262cf, #1270eb);">
+                    <b><span class="open-sans-login-600" style="color: #ffffff; font-size: 22px; font-weight: normal; text-shadow: 1px 1px #000000">Lotto {{ lottoSelezionatoDescrizione() }}</span></b>
+                </div>
+                <div class="card-body text-center">
+                <dx-data-grid
+                    #grid
+                    [dataSource]="articoloArray()"
+                    keyExpr="codice"
+                    [hoverStateEnabled]="true"
+                    [showBorders]="false"
+                    [selectedRowKeys]="[]"
+                    (onSelectionChanged)="onSelectionChanged($event)"
+                    (onRowDblClick)="onDoubleClick($event)"
+                    >
+                    <dxo-paging [enabled]="true"></dxo-paging>
+                    <dxo-data-grid-selection
+                        mode="single">
+                    </dxo-data-grid-selection>
+                    <dxi-data-grid-column
+                        alignment="center"
+                        dataField="codice"
+                        caption="Codice"
+                        cssClass="cursor-hand"
+                        headerCellTemplate="titleHeaderTemplate">
+                    </dxi-data-grid-column>
+                    <dxi-data-grid-column
+                        alignment="center"
+                        dataField="quantita"
+                        caption="Quantita'"
+                        cssClass="cursor-hand"
+                        headerCellTemplate="titleHeaderTemplate">
+                    </dxi-data-grid-column>
+                    <div *dxTemplate="let info of 'titleHeaderTemplate'">
+                        <span  class="open-sans-login-200b text-dark" style="color: black; font-size:16px; font-weight: bold; text-align: center;">{{info.column.caption}}</span>
+                    </div>
+                    <dxo-data-grid-filter-row [visible]="true"></dxo-data-grid-filter-row>
+                    <dxo-data-grid-search-panel [visible]="true"></dxo-data-grid-search-panel>
+                </dx-data-grid>
+                </div>
+                <div class="card-footer text-center bg-opacity-0 open-sans-login-200b" style="color: yellow; font-size:18px; height: 44px; background-image: linear-gradient(to left, #0b3980, #0e469a, #1154b4, #1262cf, #1270eb);">
+                {{ autorizzazione_lotti_quantita_articoli() }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center mt-40">
+        <div class="col-xl-10 mx-auto text-center ml-10 mr-10">
+            @if (grid.selectedRowKeys.length === -1) {
+            <div id="Articolo">
+            <p class="articolo">
+                <span style="color: white;">Codice: {{grid.instance.getSelectedRowsData()[0].codice}} - Quantita': {{grid.instance.getSelectedRowsData()[0].quantita}}</span>
+            </p>
+            </div>
+            }
+        </div>
+    </div>
+
+    <div class="row align-items-center mt-2">
+        <div class="col-xl-10 mx-auto text-center ml-10 mr-10">
+            <dx-load-indicator
+                class="my-custom-loader"
+                [(visible)]="isLoadIndicatorVisibleDettaglio"
+                [height]="80"
+                [width]="80"
+                [animationType]="'circle'">
+            </dx-load-indicator>
+        </div>
+    </div>
+
+    <div class="row align-items-center mt-4">
+        <div class="col-xl-10 mx-auto text-center ml-10 mr-10 mb-4">
+            <dx-button
+                text="Autorizza Lotto"
+                stylingMode="contained"
+                type="normal"
+                icon="check"
+                width="180"
+                [disabled]= !lottoSelezionato()
+                (onClick)="autorizza()">
+            </dx-button> 
+        </div>
+    </div>
+</div>
