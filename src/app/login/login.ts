@@ -8,6 +8,7 @@ import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { Subject, takeUntil } from 'rxjs';
 import { DxCheckBoxModule, DxLoadIndicatorModule } from "devextreme-angular";
 import { ValueChangedEvent } from 'devextreme/ui/check_box';
+import { LottiService } from '../services/lotti-service';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
 
   constructor(private fb: FormBuilder,
     private authService : AuthenticationService,
+    private lottiService : LottiService,
     private router: Router,
     private title: Title) {
 
@@ -49,6 +51,8 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
     });
 
     this.title.setTitle('Autorizzazione Lotti - Login');
+
+    this.warmup();
   }
 
   handleValueChange (e: ValueChangedEvent) {
@@ -113,6 +117,18 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
           }
       });
     }
+  }
+
+  warmup(){
+      this.lottiService.warmUp(0, 0)
+      .subscribe({
+          next: (result) => {
+          },
+          error: (error) => {
+          },
+          complete: () => {
+          }
+      });
   }
 
   ngOnDestroy(): void {

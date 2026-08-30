@@ -140,10 +140,9 @@ export class LottiService {
         )   
     }
 
-    public getTest(retries: number = 3, searchDelayMilliSeconds: number = 0): Observable<string> {
+    public warmUp(retries: number = 3, searchDelayMilliSeconds: number = 0): Observable<string> {
         
 		var url = environment.baseUrl + "api/versioning/v1";
-                alert(url);
         return this.http.get<string>(url)
         .pipe(
         retry(retries),
