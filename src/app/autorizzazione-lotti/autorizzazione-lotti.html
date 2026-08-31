@@ -4,6 +4,7 @@
         #loadPanel
         shadingColor="rgba(0,0,0,0.4)"
         [(visible)]="isLoadingPanelEnabled"
+        [position]="{ of: 'window', at: 'center', my: 'center' }"
         [showIndicator]="true"
         [showPane]="true"
         [message] = loadPanelMessage()
