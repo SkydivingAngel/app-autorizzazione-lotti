@@ -3,7 +3,7 @@ import { AuthenticationService } from '../services/auth-service';
 import { Router } from '@angular/router';
 import { Lotto } from './lotto';
 import { Articolo } from './articolo';
-import { DxDataGridModule , DxLoadIndicatorModule, DxSelectBoxComponent, DxSelectBoxModule } from 'devextreme-angular';
+import { DxDataGridModule , DxLoadIndicatorModule, DxLoadPanelComponent, DxSelectBoxComponent, DxSelectBoxModule } from 'devextreme-angular';
 import { ValueChangedEvent } from 'devextreme/ui/select_box';
 import { LottiService } from '../services/lotti-service';
 import { Subject, takeUntil } from 'rxjs';
@@ -23,7 +23,8 @@ import { environment } from '../../environments/environment';
 export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
   @ViewChild('selectBoxRef', { static: false }) selectBox!: DxSelectBoxComponent;
-  
+  @ViewChild('loadPanel', { static: false }) loadPanel!: DxLoadPanelComponent;
+
   lottoSelezionato= signal<string>("");
   lottoSelezionatoDescrizione = signal<string>("");
 
@@ -116,6 +117,11 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
       this.loadPanelMessage.set("Caricamento Lotti in corso...");
       this.isLoadingPanelEnabled = true;
+      setTimeout(() => {
+        if (this.loadPanel && this.loadPanel.instance) {
+          this.loadPanel.instance.repaint();
+        }
+      });
 
       this.isLoadIndicatorVisibleLotti = true;
       this.isSelectBoxDisabled.set(true);
@@ -171,6 +177,11 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
         
       this.loadPanelMessage.set("Caricamento Articoli in corso...");
       this.isLoadingPanelEnabled = true;
+      setTimeout(() => {
+        if (this.loadPanel && this.loadPanel.instance) {
+          this.loadPanel.instance.repaint();
+        }
+      });
 
       this.lottoSelezionatoDescrizione.set("[" + this.lottoSelezionato() + "]");
       this.isLoadIndicatorVisibleDettaglio = true;
