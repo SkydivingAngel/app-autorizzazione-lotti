@@ -60,6 +60,10 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
     });
 
     this.title.setTitle('Autorizzazione Lotti - Login');
+    history.pushState(null, '', location.href);
+    window.onpopstate = function () {
+      history.go(1);
+    };
 
     this.warmup();
   }

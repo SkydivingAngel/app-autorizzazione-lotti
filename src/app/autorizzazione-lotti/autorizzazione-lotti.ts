@@ -67,6 +67,11 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
     this.title.setTitle('Autorizzazione Lotti - Elenco');
     this.loadData();
 
+    history.pushState(null, '', location.href);
+    window.onpopstate = function () {
+      history.go(1);
+    };
+
     // alert(environment.baseUrl);
   }
 
