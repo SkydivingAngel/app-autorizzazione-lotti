@@ -35,6 +35,7 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
   autorizzazione_lotti_message= signal<string>('');
   autorizzazione_lotti_quantita_articoli = signal<string>('');
+  isSelectBoxDisabled = signal<boolean>(false);
   isLoadIndicatorVisibleLotti: boolean = false;
   isLoadIndicatorVisibleDettaglio: boolean = false;
 
@@ -154,6 +155,8 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
         this.isLoadIndicatorVisibleDettaglio = true;
         this.autorizzazione_lotti_quantita_articoli.set("Caricamento Articoli Lotto in corso...");
 
+        this.isSelectBoxDisabled = signal<boolean>(true);
+
         this.lottiService.dettaglioLotto(this.lottoSelezionato(), 0, 0)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
@@ -164,6 +167,8 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
               this.articoloArray.set(result);
               this.isLoadIndicatorVisibleDettaglio = false;
+              this.isLoadIndicatorVisibleDettaglio = false;
+              this.isSelectBoxDisabled = signal<boolean>(false);
 
               if(this.articoloArray().length > 0){
                 this.autorizzazione_lotti_quantita_articoli.set("Quantità Totale Articoli nel Lotto: " + this.articoloArray().reduce((sum, articolo) => sum + articolo.quantita, 0) );
@@ -174,6 +179,7 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
             },
             error: (error) => {
+              this.isSelectBoxDisabled = signal<boolean>(false);
               //console.log('Error Occurred', JSON.stringify(error));
               //alert(error.status + " - " + error.error.message);  
               if (error.status == 400) {
@@ -181,6 +187,7 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
               }
               //alert("AutorizzazioneLotti: " + JSON.stringify(error) + " - " + error.status + " - " + error.error); 
               //this.login_message.set(error.error.message);
+              this.isLoadIndicatorVisibleDettaglio = false;
               this.isLoadIndicatorVisibleDettaglio = false;
               this.lottoSelezionatoDescrizione.set("");
 

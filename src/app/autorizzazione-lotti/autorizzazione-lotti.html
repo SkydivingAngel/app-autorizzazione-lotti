@@ -11,6 +11,7 @@
                         [dataSource]="lottoArray()"
                         valueExpr="codiceLotto"
                         displayExpr="codiceLotto"
+                        [disabled] = "isSelectBoxDisabled()"
                         [searchEnabled]="true"
                         (onValueChanged)="onValueChanged($event)">
                     </dx-select-box>
