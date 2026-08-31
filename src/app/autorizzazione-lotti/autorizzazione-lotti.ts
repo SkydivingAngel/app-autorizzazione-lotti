@@ -23,7 +23,7 @@ import { environment } from '../../environments/environment';
 export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
   @ViewChild('selectBoxRef', { static: false }) selectBox!: DxSelectBoxComponent;
-  @ViewChild('loadPanel', { static: false }) loadPanel!: DxLoadPanelComponent;
+  //ViewChild('loadPanel', { static: false }) loadPanel!: DxLoadPanelComponent;
 
   lottoSelezionato= signal<string>("");
   lottoSelezionatoDescrizione = signal<string>("");
@@ -117,11 +117,11 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
       this.loadPanelMessage.set("Caricamento Lotti in corso...");
       this.isLoadingPanelEnabled = true;
-      setTimeout(() => {
-        if (this.loadPanel && this.loadPanel.instance) {
-          this.loadPanel.instance.repaint();
-        }
-      });
+      //setTimeout(() => {
+        //if (this.loadPanel && this.loadPanel.instance) {
+          //this.loadPanel.instance.repaint();
+        //}
+      //});
 
       this.isLoadIndicatorVisibleLotti = true;
       this.isSelectBoxDisabled.set(true);
@@ -177,11 +177,11 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
         
       this.loadPanelMessage.set("Caricamento Articoli in corso...");
       this.isLoadingPanelEnabled = true;
-      setTimeout(() => {
-        if (this.loadPanel && this.loadPanel.instance) {
-          this.loadPanel.instance.repaint();
-        }
-      });
+      //setTimeout(() => {
+        //if (this.loadPanel && this.loadPanel.instance) {
+          //this.loadPanel.instance.repaint();
+        //}
+      //});
 
       this.lottoSelezionatoDescrizione.set("[" + this.lottoSelezionato() + "]");
       this.isLoadIndicatorVisibleDettaglio = true;
@@ -259,10 +259,16 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
   private autorizzaLotto(){
 
+    this.loadPanelMessage.set(`Autosizzazione Lotto ${this.lottoSelezionato()}`);
+    this.isLoadingPanelEnabled = true;
+
     this.lottiService.autorizzaLotto(this.lottoSelezionato(), 0, 0)
     .pipe(takeUntil(this.destroy$))
     .subscribe({
         next: (result) => {
+
+          this.loadPanelMessage.set(``);
+          this.isLoadingPanelEnabled = false;
 
           if(result){
 
@@ -305,6 +311,10 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
         },
         error: (error) => {
+
+          this.loadPanelMessage.set(``);
+          this.isLoadingPanelEnabled = false;
+
           //console.log('Error Occurred', JSON.stringify(error));
           //alert(error.status + " - " + error.error.message);  
           if (error.status == 400) {
