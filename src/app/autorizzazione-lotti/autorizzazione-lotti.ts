@@ -9,14 +9,14 @@ import { LottiService } from '../services/lotti-service';
 import { Subject, takeUntil } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { confirm, custom, } from 'devextreme/ui/dialog';
-import { DxButtonModule, DxToastModule } from 'devextreme-angular';
+import { DxButtonModule, DxToastModule, DxLoadPanelModule } from 'devextreme-angular';
 import notify from 'devextreme/ui/notify';
 import { DxDataGridTypes } from 'devextreme-angular/ui/data-grid';
 import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-autorizzazione-lotti',
-  imports: [DxDataGridModule , DxSelectBoxModule, DxLoadIndicatorModule, DxButtonModule, DxToastModule ],
+  imports: [DxDataGridModule , DxSelectBoxModule, DxLoadIndicatorModule, DxButtonModule, DxToastModule, DxLoadPanelModule ],
   templateUrl: './autorizzazione-lotti.html',
   styleUrl: './autorizzazione-lotti.css',
 })
@@ -27,6 +27,8 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
   lottoSelezionato= signal<string>("");
   lottoSelezionatoDescrizione = signal<string>("");
 
+  loadingVisible = signal<boolean>(true);
+
   lottoArray= signal<Lotto[]>([]);
 
   articoloArray = signal<Articolo[]>([]);
@@ -35,7 +37,7 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
   autorizzazione_lotti_message= signal<string>('');
   autorizzazione_lotti_quantita_articoli = signal<string>('');
-  isSelectBoxDisabled = signal<boolean>(false);
+  isSelectBoxDisabled = signal<boolean>(true);
   isLoadIndicatorVisibleLotti: boolean = false;
   isLoadIndicatorVisibleDettaglio: boolean = false;
 
@@ -78,32 +80,32 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
     //this.toastMessage.set("Ciao Ciao");
     //this.isToastVisible = true;
 
-        notify(
-            {
-                message: `Dati riga selezionata: ${e.rowIndex} ->`  + JSON.stringify(rowData),
-                type: "success", 
-                //width: 300,
-                //height: 50,
-                position: {
-                    at: "bottom",
-                    my: "bottom",
-                    of: "#container"
-                },
-                show: {
-                  type: 'fade',
-                  duration: 400,
-                  from: 0,
-                  to: 1
-                },
-                hide: {
-                    type: 'fade',
-                    duration: 400,
-                    from: 1,
-                    to: 0
-                },
-                displayTime: 4000
-            }
-        );
+    notify(
+        {
+            message: `Dati riga selezionata: ${e.rowIndex} ->`  + JSON.stringify(rowData),
+            type: "success", 
+            //width: 300,
+            //height: 50,
+            position: {
+                at: "bottom",
+                my: "bottom",
+                of: "#container"
+            },
+            show: {
+              type: 'fade',
+              duration: 400,
+              from: 0,
+              to: 1
+            },
+            hide: {
+                type: 'fade',
+                duration: 400,
+                from: 1,
+                to: 0
+            },
+            displayTime: 4000
+        }
+    );
 
   }
 
