@@ -37,7 +37,7 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
   autorizzazione_lotti_message= signal<string>('');
   autorizzazione_lotti_quantita_articoli = signal<string>('');
-  isSelectBoxDisabled = signal<boolean>(true);
+  isSelectBoxDisabled = signal<boolean>(false);
   isLoadIndicatorVisibleLotti: boolean = false;
   isLoadIndicatorVisibleDettaglio: boolean = false;
 
@@ -112,6 +112,7 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
   private loadData(){
 
       this.isLoadIndicatorVisibleLotti = true;
+      this.isSelectBoxDisabled = signal<boolean>(true);
       this.autorizzazione_lotti_message.set("Caricamento Lotti in corso...");
 
       this.lottiService.elencoLotti(0, 0)
