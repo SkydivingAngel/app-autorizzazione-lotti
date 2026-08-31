@@ -9,6 +9,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { DxCheckBoxModule, DxLoadIndicatorModule,  DxLoadPanelModule } from "devextreme-angular";
 import { ValueChangedEvent } from 'devextreme/ui/check_box';
 import { LottiService } from '../services/lotti-service';
+import { Properties as LoadIndicatorProperties } from 'devextreme/ui/load_indicator';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,12 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
   loadPanelMessage =  signal<string>('');
   isLoadIndicatorVisible: boolean = false;
   isLoadingDataEnabled = true;
+
+  loadIndicatorOptions: LoadIndicatorProperties = {
+    animationType: 'circle',
+    width: 40,
+    height: 40
+  };
 
   constructor(private fb: FormBuilder,
     private authService : AuthenticationService,

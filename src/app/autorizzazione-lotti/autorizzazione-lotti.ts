@@ -13,6 +13,7 @@ import { DxButtonModule, DxToastModule, DxLoadPanelModule } from 'devextreme-ang
 import notify from 'devextreme/ui/notify';
 import { DxDataGridTypes } from 'devextreme-angular/ui/data-grid';
 import { environment } from '../../environments/environment';
+import { Properties as LoadIndicatorProperties } from 'devextreme/ui/load_indicator';
 
 @Component({
   selector: 'app-autorizzazione-lotti',
@@ -44,6 +45,12 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
   isLoadingPanelEnabled = false;
   loadPanelMessage = signal<string>('');
+
+  loadIndicatorOptions: LoadIndicatorProperties = {
+    animationType: 'circle',
+    width: 40,
+    height: 40
+  };
 
   constructor(private authService : AuthenticationService, private lottiService : LottiService, private router: Router,
     private title: Title) {
