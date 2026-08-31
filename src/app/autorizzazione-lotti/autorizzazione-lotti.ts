@@ -125,10 +125,11 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
             this.lottoArray.set(result);
             this.autorizzazione_lotti_message.set("Totale Lotti Trovati: " + this.lottoArray().length);
             this.isLoadIndicatorVisibleLotti = false;
-
+            this.isSelectBoxDisabled = signal<boolean>(false);
             this.selectBox.instance.clear();
           },
           error: (error) => {
+            this.isSelectBoxDisabled = signal<boolean>(false);
             //alert(error.status + " - " + error.error.message);  
             //if (error.status == 0 || error.status == 401) {
                 //this.authService.logout();
