@@ -1,4 +1,17 @@
-<div class="container" id="container" animate.enter="enter-animation">
+<div class="container" id="container">
+
+    <dx-load-panel
+        #loadPanel
+        shadingColor="rgba(0,0,0,0.4)"
+        [(visible)]="isLoadingDataEnabled"
+        [showIndicator]="true"
+        [showPane]="true"
+        message = "Caricamento dati in corso"
+        [shading]="true"
+        [hideOnOutsideClick]="false"
+    >
+    </dx-load-panel>
+
     <div class="row align-items-center mt-5">
         <div class="col-xl-10 mx-auto ml-10 mr-10 mt-5">
             <div class="card border-0 text-center ml-10 mr-10">
@@ -23,17 +36,17 @@
         </div>
     </div>
 
-    <div class="row align-items-center mt-4">
+    <!-- <div class="row align-items-center mt-4">
         <div class="col-xl-10 mx-auto text-center ml-10 mr-10">
             <dx-load-indicator
-                class="my-custom-loader"
+                id="large-indicator"
+                height="60"
+                width="60"
                 [(visible)]="isLoadIndicatorVisibleLotti"
-                [height]="80"
-                [width]="80"
                 [animationType]="'circle'">
             </dx-load-indicator>
         </div>
-    </div>
+    </div> -->
 
     <div class="row align-items-center mt-4">
         <div class="col-xl-10 mx-auto ml-10 mr-10 mt-1">
@@ -96,17 +109,14 @@
         </div>
     </div>
 
-    <div class="row align-items-center mt-2">
+    <!-- <div class="row align-items-center mt-2">
         <div class="col-xl-10 mx-auto text-center ml-10 mr-10">
             <dx-load-indicator
-                class="my-custom-loader"
                 [(visible)]="isLoadIndicatorVisibleDettaglio"
-                [height]="80"
-                [width]="80"
                 [animationType]="'circle'">
             </dx-load-indicator>
         </div>
-    </div>
+    </div> -->
 
     <div class="row align-items-center mt-4">
         <div class="col-xl-10 mx-auto text-center ml-10 mr-10 mb-4">

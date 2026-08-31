@@ -6,7 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { LoginRequest } from './login-request';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { Subject, takeUntil } from 'rxjs';
-import { DxCheckBoxModule, DxLoadIndicatorModule } from "devextreme-angular";
+import { DxCheckBoxModule, DxLoadIndicatorModule,  DxLoadPanelModule } from "devextreme-angular";
 import { ValueChangedEvent } from 'devextreme/ui/check_box';
 import { LottiService } from '../services/lotti-service';
 
@@ -14,7 +14,7 @@ import { LottiService } from '../services/lotti-service';
   selector: 'app-login',
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
-  imports: [ReactiveFormsModule, DxButtonModule, DxCheckBoxModule, DxLoadIndicatorModule]
+  imports: [ReactiveFormsModule, DxButtonModule, DxCheckBoxModule, DxLoadIndicatorModule, DxLoadPanelModule]
 })
 export class Login implements OnInit, AfterViewInit, OnDestroy{
   public loginForm?: any;
@@ -23,6 +23,7 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
   checkBox_show_password: boolean = false;
   login_message= signal('');
   isLoadIndicatorVisible: boolean = false;
+  isLoadingDataEnabled = true;
 
   constructor(private fb: FormBuilder,
     private authService : AuthenticationService,

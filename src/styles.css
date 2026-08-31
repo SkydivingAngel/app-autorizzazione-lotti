@@ -84,15 +84,11 @@ body, html {
     font-variation-settings: "wdth" 100;
 }
 
-.dx-loadindicator-content-circle .dx-loadindicator-segment{
+/* .dx-loadindicator-content-circle .dx-loadindicator-segment{
    width: 10% !important;
    background: white !important; 
-}
+} */
 
 .cursor-hand {
     cursor: pointer;
-}
-
-.enter-animation {
-  animation: slide-fade 1;
 }

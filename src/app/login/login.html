@@ -57,15 +57,26 @@
     </div>
 </div>
 @if (isLoadIndicatorVisible) {
-    <div class="row align-items-center">
+    <!-- <div class="row align-items-center">
         <div class="col-xl-10 mx-auto text-center ml-10 mr-10 mb-2">
             <dx-load-indicator
-                class="my-custom-loader"
                 [(visible)]="isLoadIndicatorVisible"
-                [height]="80"
-                [width]="80"
+                [height]="40"
+                [width]="40"
                 [animationType]="'circle'">
             </dx-load-indicator>
         </div>
-    </div>
+    </div> -->
+
+    <dx-load-panel
+        #loadPanel
+        shadingColor="rgba(0,0,0,0.4)"
+        [(visible)]="isLoadingDataEnabled"
+        [showIndicator]="true"
+        [showPane]="true"
+        message = "Login in corso"
+        [shading]="true"
+        [hideOnOutsideClick]="false"
+    >
+    </dx-load-panel>
 }
