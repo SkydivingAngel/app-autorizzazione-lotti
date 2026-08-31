@@ -1,0 +1,3 @@
+::ng-deep .custom-bold-panel .dx-loadpanel-message {
+  font-weight: bold;
+}
