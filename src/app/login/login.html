@@ -51,7 +51,7 @@
                 </form>
             </div>
             <div class="card-footer text-center bg-opacity-0" style="color: yellow; height: 44px; background-image: linear-gradient(to left, #0b3980, #0e469a, #1154b4, #1262cf, #1270eb);">
-                {{  login_message() }}
+                {{  loginMessage() }}
             </div>
         </div>
     </div>
@@ -74,7 +74,7 @@
         [(visible)]="isLoadingDataEnabled"
         [showIndicator]="true"
         [showPane]="true"
-        message = "Login in corso"
+        [message] = loadPanelMessage()
         [shading]="true"
         [hideOnOutsideClick]="false"
     >

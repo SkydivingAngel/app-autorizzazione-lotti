@@ -41,7 +41,8 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
   isLoadIndicatorVisibleLotti: boolean = false;
   isLoadIndicatorVisibleDettaglio: boolean = false;
 
-  isLoadingDataEnabled = false;
+  isLoadingPanelEnabled = false;
+  loadPanelMessage =  signal<string>('');
 
   constructor(private authService : AuthenticationService, private lottiService : LottiService, private router: Router,
     private title: Title) {
@@ -113,10 +114,12 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
   private loadData(){
 
-      this.isLoadingDataEnabled = true;
+      this.isLoadingPanelEnabled = true;
+      this.loadPanelMessage.set("Caricamento Lotti in corso...");
+
       this.isLoadIndicatorVisibleLotti = true;
-      this.isSelectBoxDisabled = signal<boolean>(true);
-      this.autorizzazione_lotti_message.set("Caricamento Lotti in corso...");
+      this.isSelectBoxDisabled.set(true);
+      //this.autorizzazione_lotti_message.set("Caricamento Lotti in corso...");
 
       this.lottiService.elencoLotti(0, 0)
       .pipe(takeUntil(this.destroy$))
@@ -129,13 +132,19 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
             this.lottoArray.set(result);
             this.autorizzazione_lotti_message.set("Totale Lotti Trovati: " + this.lottoArray().length);
             this.isLoadIndicatorVisibleLotti = false;
-            this.isSelectBoxDisabled = signal<boolean>(false);
-                        this.isLoadingDataEnabled = false;
+            this.isSelectBoxDisabled.set(false);
+
+            this.isLoadingPanelEnabled = false;
+            this.loadPanelMessage.set("");
+
             this.selectBox.instance.clear();
           },
           error: (error) => {
-            this.isSelectBoxDisabled = signal<boolean>(false);
-            this.isLoadingDataEnabled = false;
+            this.isSelectBoxDisabled.set(false);
+
+            this.isLoadingPanelEnabled = false;
+            this.loadPanelMessage.set("");
+
             //alert(error.status + " - " + error.error.message);  
             //if (error.status == 0 || error.status == 401) {
                 //this.authService.logout();
@@ -160,10 +169,12 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
       
       if(this.lottoSelezionato().trim() !== ""){
         
-        this.isLoadingDataEnabled = true;
+      this.isLoadingPanelEnabled = true;
+      this.loadPanelMessage.set("Caricamento Articoli in corso...");
+
         this.lottoSelezionatoDescrizione.set("[" + this.lottoSelezionato() + "]");
         this.isLoadIndicatorVisibleDettaglio = true;
-        this.autorizzazione_lotti_quantita_articoli.set("Caricamento Articoli Lotto in corso...");
+        //this.autorizzazione_lotti_quantita_articoli.set("Caricamento Articoli Lotto in corso...");
 
         this.isSelectBoxDisabled = signal<boolean>(true);
 
@@ -179,7 +190,9 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
               this.isLoadIndicatorVisibleDettaglio = false;
               this.isLoadIndicatorVisibleDettaglio = false;
               this.isSelectBoxDisabled = signal<boolean>(false);
-              this.isLoadingDataEnabled = false;
+
+              this.isLoadingPanelEnabled = false;
+              this.loadPanelMessage.set("");
 
               if(this.articoloArray().length > 0){
                 this.autorizzazione_lotti_quantita_articoli.set("Quantità Totale Articoli nel Lotto: " + this.articoloArray().reduce((sum, articolo) => sum + articolo.quantita, 0) );
@@ -190,28 +203,31 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
             },
             error: (error) => {
-              this.isLoadingDataEnabled = false;
-              this.isSelectBoxDisabled = signal<boolean>(false);
-              //console.log('Error Occurred', JSON.stringify(error));
-              //alert(error.status + " - " + error.error.message);  
-              if (error.status == 400) {
-                //this.login_message.set(error.error.message);
-              }
-              //alert("AutorizzazioneLotti: " + JSON.stringify(error) + " - " + error.status + " - " + error.error); 
-              //this.login_message.set(error.error.message);
-              this.isLoadIndicatorVisibleDettaglio = false;
-              this.isLoadIndicatorVisibleDettaglio = false;
-              this.lottoSelezionatoDescrizione.set("");
 
-              this.authService.logout();
-              this.router.navigate(['/login']);
-              return;
-            },
-            complete: () => {
-              //console.log('Stream Completed')
-              //alert(JSON.stringify('Stream Completed'));
-              this.isLoadIndicatorVisibleDettaglio = false;
+            this.isLoadingPanelEnabled = false;
+            this.loadPanelMessage.set("");
+
+            this.isSelectBoxDisabled = signal<boolean>(false);
+            //console.log('Error Occurred', JSON.stringify(error));
+            //alert(error.status + " - " + error.error.message);  
+            if (error.status == 400) {
+              //this.login_message.set(error.error.message);
             }
+            //alert("AutorizzazioneLotti: " + JSON.stringify(error) + " - " + error.status + " - " + error.error); 
+            //this.login_message.set(error.error.message);
+            this.isLoadIndicatorVisibleDettaglio = false;
+            this.isLoadIndicatorVisibleDettaglio = false;
+            this.lottoSelezionatoDescrizione.set("");
+
+            this.authService.logout();
+            this.router.navigate(['/login']);
+            return;
+          },
+          complete: () => {
+            //console.log('Stream Completed')
+            //alert(JSON.stringify('Stream Completed'));
+            this.isLoadIndicatorVisibleDettaglio = false;
+          }
         });
 
       }

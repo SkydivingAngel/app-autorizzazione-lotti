@@ -3,10 +3,10 @@
     <dx-load-panel
         #loadPanel
         shadingColor="rgba(0,0,0,0.4)"
-        [(visible)]="isLoadingDataEnabled"
+        [(visible)]="isLoadingPanelEnabled"
         [showIndicator]="true"
         [showPane]="true"
-        message = "Caricamento dati in corso"
+        [message] = loadPanelMessage()
         [shading]="true"
         [hideOnOutsideClick]="false"
     >

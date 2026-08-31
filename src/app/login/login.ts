@@ -21,7 +21,8 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
   private destroy$ = new Subject<void>();
 
   checkBox_show_password: boolean = false;
-  login_message= signal('');
+  loginMessage = signal<string>('');
+  loadPanelMessage =  signal<string>('');
   isLoadIndicatorVisible: boolean = false;
   isLoadingDataEnabled = true;
 
@@ -77,7 +78,7 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
       loginRequest.scope = ""; 
 
       this.authService.logout();
-      this.login_message.set("Verifica Credenziali in corso...");
+      this.loadPanelMessage.set("Verifica Credenziali in corso...");
 
       //alert(JSON.stringify(loginRequest));
 
@@ -93,7 +94,7 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
               this.authService.logout();
               //alert('Errore di autenticazione. Controlla le credenziali e riprova.');
               this.isLoadIndicatorVisible = false;
-              this.login_message.set("");
+              this.loginMessage.set("");
             }
           },
           error: (error) => {
@@ -103,10 +104,10 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
             //console.log('Error Occurred', JSON.stringify(error));
             // alert(error.status + " - " + error.error.message);  
             if (error.status == 400) {
-              this.login_message.set(error.error.message);
+              this.loginMessage.set(error.error.message);
             }
             if (error.status == 401) {
-              this.login_message.set(error.status + " - " + error.error);
+              this.loginMessage.set(error.status + " - " + error.error);
               this.authService.logout();
               //this.router.navigate(['/login']);
               //return;
