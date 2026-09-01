@@ -284,27 +284,25 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
           if(result){
 
-          let myDialog = custom({
-            title: "Autorizzazione Lotto",
-            messageHtml: `<span style="color: black; font-size: 15px; font-weight: normal;">Lotto: </span><b><span class="open-sans-login-400b" style="color: red; font-size: 15px; font-weight: bold;">${this.lottoSelezionato()}</span>&nbsp;<span style="color: black; font-size: 15px; font-weight: normal;">Autorizzato!</span>`,
-            buttons: [{
-              text: "Ok",
-              onClick: (e) => {
-                return { buttonText: e.component.option("text") }
-              }
-            }, 
-            // ...
-            ]
-          });
+            let myDialog = custom({
+              title: "Autorizzazione Lotto",
+              messageHtml: `<span style="color: black; font-size: 15px; font-weight: normal;">Lotto: </span><b><span class="open-sans-login-400b" style="color: red; font-size: 15px; font-weight: bold;">${this.lottoSelezionato()}</span>&nbsp;<span style="color: black; font-size: 15px; font-weight: normal;">Autorizzato!</span>`,
+              buttons: [{
+                text: "Ok",
+                onClick: (e) => {
+                  return { buttonText: e.component.option("text") }
+                }
+              }, 
+              // ...
+              ]
+            });
 
-          myDialog.show().then((dialogResult: { buttonText: any; }) => {
-            console.log(dialogResult.buttonText);
-            
-            this.clearFields();
-            this.loadData();
-          });
-
-
+            myDialog.show().then((dialogResult: { buttonText: any; }) => {
+              console.log(dialogResult.buttonText);
+              
+              this.clearFields();
+              this.loadData();
+            });
 
           }
           //alert(JSON.stringify(result));
