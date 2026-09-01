@@ -271,7 +271,7 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
   private autorizzaLotto(){
 
-    this.loadPanelMessage.set(`Autosizzazione Lotto ${this.lottoSelezionato()}`);
+    this.loadPanelMessage.set(`Autorizzazione Lotto ${this.lottoSelezionato()}`);
     this.isLoadingPanelEnabled = true;
 
     this.lottiService.autorizzaLotto(this.lottoSelezionato(), 0, 0)
