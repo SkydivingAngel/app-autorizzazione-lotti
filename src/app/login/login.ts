@@ -17,6 +17,7 @@ import { Properties as LoadIndicatorProperties } from 'devextreme/ui/load_indica
   styleUrls: ['./login.css'],
   imports: [ReactiveFormsModule, DxButtonModule, DxCheckBoxModule, DxLoadIndicatorModule, DxLoadPanelModule]
 })
+
 export class Login implements OnInit, AfterViewInit, OnDestroy{
   public loginForm?: any;
   private destroy$ = new Subject<void>();
@@ -105,9 +106,7 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
             }
             else{
               this.authService.logout();
-              //alert('Errore di autenticazione. Controlla le credenziali e riprova.');
-              this.loginMessage.set("");
-
+              this.loginMessage.set("Errore di autenticazione. Controlla le credenziali e riprova.");
               this.loadPanelMessage.set("");
               this.isLoadingPanelEnabled = false;
             }
@@ -117,22 +116,19 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
             this.loadPanelMessage.set("");
             this.isLoadingPanelEnabled = false;
 
-            //this.authService.logout();
-            //console.log('Error Occurred', JSON.stringify(error));
             //alert(error.status + " - " + error.error.message);  
+
             if (error.status == 400) {
-              this.loginMessage.set(error.error.message);
+              this.loginMessage.set(error.status + " - " + error.error);
+              this.authService.logout();
             }
             if (error.status == 401) {
               this.loginMessage.set(error.status + " - " + error.error);
               this.authService.logout();
-              //this.router.navigate(['/login']);
-              //return;
             }
           },
           complete: () => {
             //console.log('Stream Completed')
-            //this.isLoadIndicatorVisible = false;
           }
       });
     }

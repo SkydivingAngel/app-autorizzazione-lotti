@@ -4,12 +4,14 @@ import { AuthenticationService } from './services/auth-service';
 import itMessages from 'devextreme/localization/messages/it.json';
 import { loadMessages, locale } from 'devextreme/localization';
 import { Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink,],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
+
 export class App implements OnInit {
 
   constructor(public readonly authService: AuthenticationService, private readonly router: Router,
