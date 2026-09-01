@@ -23,9 +23,9 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
 
   checkBox_show_password: boolean = false;
   loginMessage = signal<string>('');
-  loadPanelMessage =  signal<string>('');
-  isLoadIndicatorVisible: boolean = false;
-  isLoadingDataEnabled = true;
+
+  isLoadingPanelEnabled = false; 
+  loadPanelMessage = signal<string>('');
 
   loadIndicatorOptions: LoadIndicatorProperties = {
     animationType: 'circle',
@@ -77,8 +77,6 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
   onSubmit(): void {
     if (this.loginForm.valid) {
 
-      this.isLoadIndicatorVisible = true;
-
       //const username = this.loginForm.get('username').value;
       //const password = this.loginForm.get('password').value;
       
@@ -89,7 +87,9 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
       loginRequest.scope = ""; 
 
       this.authService.logout();
+
       this.loadPanelMessage.set("Verifica Credenziali in corso...");
+      this.isLoadingPanelEnabled = true;
 
       //alert(JSON.stringify(loginRequest));
 
@@ -98,22 +98,28 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
       .subscribe({
           next: (result) => {
             if(result) {
+              this.loadPanelMessage.set("");
+              this.isLoadingPanelEnabled = false;
               this.router.navigate(['/elenco']);
               return;
             }
             else{
               this.authService.logout();
               //alert('Errore di autenticazione. Controlla le credenziali e riprova.');
-              this.isLoadIndicatorVisible = false;
               this.loginMessage.set("");
+
+              this.loadPanelMessage.set("");
+              this.isLoadingPanelEnabled = false;
             }
           },
           error: (error) => {
-            this.isLoadIndicatorVisible = false;
+
+            this.loadPanelMessage.set("");
+            this.isLoadingPanelEnabled = false;
 
             //this.authService.logout();
             //console.log('Error Occurred', JSON.stringify(error));
-            // alert(error.status + " - " + error.error.message);  
+            //alert(error.status + " - " + error.error.message);  
             if (error.status == 400) {
               this.loginMessage.set(error.error.message);
             }
