@@ -119,7 +119,7 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
             //alert(error.status + " - " + error.error.message);  
 
             if (error.status == 400) {
-              this.loginMessage.set(error.status + " - " + error.error);
+              this.loginMessage.set(error.status + " - " + error.error.message);
               this.authService.logout();
             }
             if (error.status == 401) {
