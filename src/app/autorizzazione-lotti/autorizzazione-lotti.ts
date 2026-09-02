@@ -99,13 +99,15 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
     notify(
         {
             message: `Dati riga selezionata: ${e.rowIndex} ->`  + JSON.stringify(rowData),
-            type: "success", 
-            //width: 300,
+            type: "success",
+            shading: false,
+            hideOnOutsideClick: true,
+            closeOnClick: true,
+            closeOnSwipe: true,
             //height: 50,
             position: {
-                at: "bottom",
-                my: "bottom",
-                of: "#container"
+                at: "center",
+                my: "center"
             },
             show: {
               type: 'fade',
@@ -119,7 +121,7 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
                 from: 1,
                 to: 0
             },
-            displayTime: 4000
+            displayTime: 1000
         }
     );
 
@@ -129,6 +131,7 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
       this.loadPanelMessage.set("Caricamento Lotti in corso...");
       this.isLoadingPanelEnabled = true;
+
       //setTimeout(() => {
         //if (this.loadPanel && this.loadPanel.instance) {
           //this.loadPanel.instance.repaint();
@@ -345,18 +348,7 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
         }
     });
 
-
-
-
-
-
-
-
-
-
     //window.location.reload();
-
-
   }
 
   private clearFields(){
@@ -374,5 +366,4 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
     //this.authService.logout();
   }
-
 }
