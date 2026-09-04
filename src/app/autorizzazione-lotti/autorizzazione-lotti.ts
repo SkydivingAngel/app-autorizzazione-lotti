@@ -6,7 +6,7 @@ import { Articolo } from './articolo';
 import { DxDataGridModule , DxLoadIndicatorModule, DxLoadPanelComponent, DxSelectBoxComponent, DxSelectBoxModule } from 'devextreme-angular';
 import { ValueChangedEvent } from 'devextreme/ui/select_box';
 import { LottiService } from '../services/lotti-service';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { confirm, custom, } from 'devextreme/ui/dialog';
 import { DxButtonModule, DxToastModule, DxLoadPanelModule } from 'devextreme-angular';
@@ -143,7 +143,13 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
       //this.autorizzazione_lotti_message.set("Caricamento Lotti in corso...");
 
       this.lottiService.elencoLotti(0, 0)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        finalize(() => {
+              this.loadPanelMessage.set("");
+              this.isLoadingPanelEnabled = false;
+        }),
+        takeUntil(this.destroy$)
+      )
       .subscribe({
           next: (result) => {
             //alert(JSON.stringify(result));
@@ -155,16 +161,10 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
             this.isLoadIndicatorVisibleLotti = false;
             this.isSelectBoxDisabled.set(false);
 
-            this.isLoadingPanelEnabled = false;
-            //this.loadPanelMessage.set("");
-
             this.selectBox.instance.clear();
           },
           error: (error) => {
             this.isSelectBoxDisabled.set(false);
-
-            this.isLoadingPanelEnabled = false;
-            this.loadPanelMessage.set("");
 
             //alert(error.status + " - " + error.error.message);  
             //if (error.status == 0 || error.status == 401) {
@@ -205,7 +205,13 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
       this.isSelectBoxDisabled.set(true);
 
       this.lottiService.dettaglioLotto(this.lottoSelezionato(), 0, 0)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        finalize(() => {
+              this.loadPanelMessage.set("");
+              this.isLoadingPanelEnabled = false;
+        }),
+        takeUntil(this.destroy$)
+      )
       .subscribe({
           next: (result) => {
             //alert(JSON.stringify(result));
@@ -217,9 +223,6 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
             this.isLoadIndicatorVisibleDettaglio = false;
             this.isSelectBoxDisabled.set(false);
 
-            this.isLoadingPanelEnabled = false;
-            this.loadPanelMessage.set("");
-
             if(this.articoloArray().length > 0){
               this.autorizzazione_lotti_quantita_articoli.set("Quantità Totale Articoli nel Lotto: " + this.articoloArray().reduce((sum, articolo) => sum + articolo.quantita, 0) );
             }
@@ -229,9 +232,6 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
           },
           error: (error) => {
-
-          this.isLoadingPanelEnabled = false;
-          this.loadPanelMessage.set("");
 
           this.isSelectBoxDisabled.set(false);
           //console.log('Error Occurred', JSON.stringify(error));
@@ -278,12 +278,15 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
     this.isLoadingPanelEnabled = true;
 
     this.lottiService.autorizzaLotto(this.lottoSelezionato(), 0, 0)
-    .pipe(takeUntil(this.destroy$))
+    .pipe(
+        finalize(() => {
+              this.loadPanelMessage.set("");
+              this.isLoadingPanelEnabled = false;
+        }),
+        takeUntil(this.destroy$)     
+      )
     .subscribe({
         next: (result) => {
-
-          this.loadPanelMessage.set(``);
-          this.isLoadingPanelEnabled = false;
 
           if(result){
 
@@ -324,9 +327,6 @@ export class AutorizzazioneLotti implements OnInit, OnDestroy {
 
         },
         error: (error) => {
-
-          this.loadPanelMessage.set(``);
-          this.isLoadingPanelEnabled = false;
 
           //console.log('Error Occurred', JSON.stringify(error));
           //alert(error.status + " - " + error.error.message);  

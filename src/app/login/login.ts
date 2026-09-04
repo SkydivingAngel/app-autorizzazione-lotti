@@ -5,7 +5,7 @@ import { AuthenticationService } from '../services/auth-service';
 import { Title } from '@angular/platform-browser';
 import { LoginRequest } from './login-request';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { DxCheckBoxModule, DxLoadIndicatorModule,  DxLoadPanelModule } from "devextreme-angular";
 import { ValueChangedEvent } from 'devextreme/ui/check_box';
 import { LottiService } from '../services/lotti-service';
@@ -95,27 +95,26 @@ export class Login implements OnInit, AfterViewInit, OnDestroy{
       //alert(JSON.stringify(loginRequest));
 
       this.authService.login(loginRequest, 0, 0)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        finalize(() => {
+              this.loadPanelMessage.set("");
+              this.isLoadingPanelEnabled = false;
+        }),
+        takeUntil(this.destroy$)
+      )
       .subscribe({
           next: (result) => {
             if(result) {
-              this.loadPanelMessage.set("");
-              this.isLoadingPanelEnabled = false;
               this.router.navigate(['/elenco']);
               return;
             }
             else{
               this.authService.logout();
               this.loginMessage.set("Errore di autenticazione. Controlla le credenziali e riprova.");
-              this.loadPanelMessage.set("");
-              this.isLoadingPanelEnabled = false;
             }
           },
           error: (error) => {
-
-            this.loadPanelMessage.set("");
-            this.isLoadingPanelEnabled = false;
-
+            
             //alert(error.status + " - " + error.error.message);  
 
             if (error.status == 400) {
